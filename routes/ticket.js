@@ -1,139 +1,92 @@
 const express = require('express');
 const { body } = require('express-validator');
 
-const orderController = require('../controllers/order');
+const ticketController = require('../controllers/ticket');
 const { isAuth } = require('../middlewares/is-auth');
 const upload = require('../utils/multer');
 
 const router = express.Router();
 
 //──── GET Http Methods ──────────────────────────────────────────────────────────────────
-// GET /api/orders
-router.get('/order', orderController.getOrders);
+// GET /api/tickets
+router.get('/tickets', ticketController.getTickets);
 
-// GET /api/order/:orderId
-router.get('/order/:orderId', orderController.getOrder);
+// GET /api/ticket/:UserId
+router.get('/ticket/:userId', ticketController.getTicket);
 //──── GET Http Methods ──────────────────────────────────────────────────────────────────
 
 
 //──── POST Http Methods ─────────────────────────────────────────────────────────────────
-// POST /api/order
+// POST /api/ticket
 router.post(
-    '/order',
-    //upload.single('imageUrl'),
+    '/ticket',
     [
         body('status')
             .trim()
             .isLength({ min: 5 })
             .not()
             .isEmpty(),
-        body('type')
+        body('title')
             .trim()
             .not()
             .isEmpty(),
-        body('province')
+        body('body')
             .trim()
             .not()
             .isEmpty(),
-        body('city')
+        body('date')
             .trim()
             .not()
             .isEmpty(),
-        body('district')
+        body('creator')
             .trim()
             .not()
-            .isEmpty(),
-        body('street')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('priority')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('startDate')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('project')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('period')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('dueDate')
-            .trim()
-            .not()
-            .isEmpty(),
+            .isEmpty()
     ],
-    orderController.createOrder
+    ticketController.createTicket
 );
 //──── POST Http Methods ─────────────────────────────────────────────────────────────────
 
 
 
 //──── PUT Http Methods ──────────────────────────────────────────────────────────────────
-// PUT /api/order/:orderId
+// PUT /api/ticket/:ticketId
 router.put(
-    '/order/:orderId',
+    '/ticket/:ticketId',
     isAuth,
-    //upload.single('imageUrl'),
     [
         body('status')
             .trim()
             .isLength({ min: 5 })
             .not()
             .isEmpty(),
-        body('status')
+        body('title')
+            .trim()
+            .isLength({ min: 5 })
+            .not()
+            .isEmpty(),
+        body('body')
+            .trim()
+            .isLength({ min: 10 })
+            .not()
+            .isEmpty(),
+        body('date')
             .trim()
             .not()
             .isEmpty(),
-        body('province')
+        body('creator')
             .trim()
             .not()
             .isEmpty(),
-        body('city')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('district')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('street')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('priority')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('startDate')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('project')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('period')
-            .trim()
-            .not()
-            .isEmpty(),
-        body('dueDate')
-            .trim()
-            .not()
-            .isEmpty(),
+
     ],
-    orderController.updateOrder
+    ticketController.updateTicket
 );
 //──── PUT Http Methods ──────────────────────────────────────────────────────────────────
 
 //──── DELETE Http Methods ───────────────────────────────────────────────────────────────
-// DELETE /api/order/:orderId
-router.delete('/order/:orderId', isAuth, orderController.deleteOrder);
+// DELETE /api/ticket/:ticketId
+router.delete('/ticket/:ticketId', isAuth, ticketController.deleteTicket);
 //──── DELETE Http Methods ───────────────────────────────────────────────────────────────
 
 module.exports = router;

@@ -20,7 +20,7 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
-    courses: [{ courseId: { type: Schema.Types.ObjectId, ref: 'Course' } }]
+    tickets: [{ ticketId: { type: Schema.Types.ObjectId, ref: 'Ticket' } }]
 });
 
 module.exports = mongoose.model('User', userSchema);

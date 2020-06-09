@@ -2,13 +2,13 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const multer= require('multer');
+const multer = require('multer');
 
 const { connectToDB } = require("./utils/database");
 
 const userRoutes = require("./routes/user");
 const courseRoutes = require("./routes/course");
-const orderRoutes = require("./routes/order");
+const ticketRoutes = require("./routes/ticket");
 
 const { setHeaders } = require("./middlewares/headers");
 const { errorHandler } = require("./middlewares/errors");
@@ -28,11 +28,11 @@ app.use(setHeaders);
 //──── Routes
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
-app.use("/api", orderRoutes);
+app.use("/api", ticketRoutes);
 
-app.post("/file",upload.single('file'),(req,res)=>{
-    console.log('body',req.file.lenght, req.file);
-    res.json({ success:true })
+app.post("/file", upload.single('file'), (req, res) => {
+    console.log('body', req.file.lenght, req.file);
+    res.json({ success: true })
 })
 
 //──── Error Handler Middleware
